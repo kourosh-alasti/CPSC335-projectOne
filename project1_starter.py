@@ -112,19 +112,30 @@ def find_common_time_slots(schedule1, schedule2, min_duration):
 
 
 if __name__ == "__main__":
+    person1_Schedule = None 
+    person2_Schedule = None 
+    person1_DailyAct = None
+    person2_DailyAct = None
+    duration_of_meeting = None
+    
     # Sample Input
-    person1_Schedule = [["7:00", "8:30"], ["12:00", "13:00"], ["16:00", "18:00"]]
-    person1_DailyAct = ["9:00", "19:00"]
+    # person1_Schedule = [["7:00", "8:30"], ["12:00", "13:00"], ["16:00", "18:00"]]
+    # person1_DailyAct = ["9:00", "19:00"]
 
-    person2_Schedule = [
-        ["9:00", "10:30"],
-        ["12:20", "13:30"],
-        ["14:00", "15:00"],
-        ["16:00", "17:00"],
-    ]
-    person2_DailyAct = ["9:00", "18:30"]
+    # person2_Schedule = [
+    #     ["9:00", "10:30"],
+    #     ["12:20", "13:30"],
+    #     ["14:00", "15:00"],
+    #     ["16:00", "17:00"],
+    # ]
+    # person2_DailyAct = ["9:00", "18:30"]
 
-    duration_of_meeting = 30
+    # duration_of_meeting = 30
+    
+    file = open('input_testcase01.txt')
+    
+    for line in file: 
+        exec(line)
 
     inverted_person1_schedule = invert_time_slots(person1_Schedule)
     inverted_person2_schedule = invert_time_slots(person2_Schedule)
