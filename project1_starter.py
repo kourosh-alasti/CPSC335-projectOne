@@ -132,7 +132,7 @@ if __name__ == "__main__":
 
     # duration_of_meeting = 30
     
-    file = open('input_testcase01.txt')
+    file = open('input_testcase08.txt')
     
     for line in file: 
         exec(line)
