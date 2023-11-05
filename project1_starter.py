@@ -110,7 +110,7 @@ def find_common_time_slots(schedule1, schedule2, duration):
 
     # Convert it back to human read-able format
     final_schedule = [
-        (convert_to_string(start), convert_to_string(end))
+        [convert_to_string(start), convert_to_string(end)]
         for start, end in merged_schedule
     ]
 
@@ -124,7 +124,7 @@ if __name__ == "__main__":
     person2_DailyAct = None
     duration_of_meeting = None
 
-    file = open("input_testcase10.txt")
+    file = open("input_testcase05.txt")
 
     for line in file:
         exec(line)
