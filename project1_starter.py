@@ -74,13 +74,6 @@ def find_available_slots(avail_schedule, daily_activity, duration):
             if start < end:
                 merged_schedule.append((start, end))
 
-    # Debugging
-    # new_merged = [
-    #     (convert_to_string(start), convert_to_string(end))
-    #     for start, end in merged_schedule
-    # ]
-    # print(f"MERGED SCHEDULE: \n{new_merged}\n\n")
-
     return merged_schedule
 
 
@@ -118,11 +111,13 @@ def find_common_time_slots(schedule1, schedule2, duration):
 
 
 if __name__ == "__main__":
-    person1_Schedule = None
-    person1_DailyAct = None
-    person2_Schedule = None
-    person2_DailyAct = None
-    duration_of_meeting = None
+    (
+        person1_Schedule,
+        person1_DailyAct,
+        person2_Schedule,
+        person2_DailyAct,
+        duration_of_meeting,
+    ) = (None, None, None, None, None)
 
     file = open("input.txt")
 
@@ -152,7 +147,7 @@ if __name__ == "__main__":
             output_text.append(common_slots)  # Output
 
     # Write to the file
-    output_file = open("output.txt", "a")
+    output_file = open("output.txt", "w")
 
     for index, line in enumerate(output_text):
         output_file.write(f"Test Case [{index + 1}]: {str(line)}\n")
