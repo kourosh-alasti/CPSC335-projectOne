@@ -84,58 +84,46 @@ def find_available_slots(avail_schedule, daily_activity, duration):
     return merged_schedule
 
 
-def find_common_time_slots(schedule1, schedule2, min_duration):
-    def time_overlap(slot1, slot2):
-        start1, end1 = slot1
-        start2, end2 = slot2
-        return max(start1, start2), min(end1, end2)
+# Runs in O(n) time, optimal solution?
+def find_common_time_slots(schedule1, schedule2):
+    merged_schedule = []
+    i, j = 0, 0
 
-    def filter_slots_by_duration(slots, duration):
-        filtered_slots = []
-        for start, end in slots:
-            if (end - start) >= timedelta(minutes=duration):
-                filtered_slots.append(
-                    [convert_to_string(start), convert_to_string(end)]
-                )
-        return filtered_slots
+    while i < len(schedule1) and j < len(schedule2):
+        start1, end1 = schedule1[i]
+        start2, end2 = schedule2[j]
 
-    common_slots = []
-    for slot1 in schedule1:
-        for slot2 in schedule2:
-            overlap_start, overlap_end = time_overlap(slot1, slot2)
-            if overlap_start < overlap_end:
-                common_slots.append((overlap_start, overlap_end))
+        # Find the overlap between time slots
+        overlap_start = max(start1, start2)
+        overlap_end = min(end1, end2)
 
-    # Filter common slots by minimum duration
-    common_slots_filtered = filter_slots_by_duration(common_slots, min_duration)
-    return common_slots_filtered
+        # Check for overlap
+        if overlap_start < overlap_end:
+            merged_schedule.append([overlap_start, overlap_end])
+
+        # Move to the next time slot that ends first
+        if end1 < end2:
+            i += 1
+        else:
+            j += 1
+
+    return merged_schedule
 
 
 if __name__ == "__main__":
-    person1_Schedule = None 
-    person2_Schedule = None 
-    person1_DailyAct = None
-    person2_DailyAct = None
-    duration_of_meeting = None
-    
     # Sample Input
-    # person1_Schedule = [["7:00", "8:30"], ["12:00", "13:00"], ["16:00", "18:00"]]
-    # person1_DailyAct = ["9:00", "19:00"]
+    person1_Schedule = [["7:00", "8:30"], ["12:00", "13:00"], ["16:00", "18:00"]]
+    person1_DailyAct = ["9:00", "19:00"]
 
-    # person2_Schedule = [
-    #     ["9:00", "10:30"],
-    #     ["12:20", "13:30"],
-    #     ["14:00", "15:00"],
-    #     ["16:00", "17:00"],
-    # ]
-    # person2_DailyAct = ["9:00", "18:30"]
+    person2_Schedule = [
+        ["9:00", "10:30"],
+        ["12:20", "13:30"],
+        ["14:00", "15:00"],
+        ["16:00", "17:00"],
+    ]
+    person2_DailyAct = ["9:00", "18:30"]
 
-    # duration_of_meeting = 30
-    
-    file = open('input_testcase08.txt')
-    
-    for line in file: 
-        exec(line)
+    duration_of_meeting = 30
 
     inverted_person1_schedule = invert_time_slots(person1_Schedule)
     inverted_person2_schedule = invert_time_slots(person2_Schedule)
