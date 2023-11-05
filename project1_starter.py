@@ -85,7 +85,7 @@ def find_available_slots(avail_schedule, daily_activity, duration):
 
 
 # Runs in O(n) time, optimal solution?
-def find_common_time_slots(schedule1, schedule2):
+def find_common_time_slots(schedule1, schedule2, duration):
     merged_schedule = []
     i, j = 0, 0
 
@@ -99,7 +99,8 @@ def find_common_time_slots(schedule1, schedule2):
 
         # Check for overlap
         if overlap_start < overlap_end:
-            merged_schedule.append([overlap_start, overlap_end])
+            if overlap_end - overlap_start >= timedelta(minutes=duration):
+                merged_schedule.append([overlap_start, overlap_end])
 
         # Move to the next time slot that ends first
         if end1 < end2:
