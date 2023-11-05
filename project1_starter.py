@@ -108,19 +108,25 @@ def find_common_time_slots(schedule1, schedule2, duration):
         else:
             j += 1
 
-    return merged_schedule
+    # Convert it back to human read-able format
+    final_schedule = [
+        (convert_to_string(start), convert_to_string(end))
+        for start, end in merged_schedule
+    ]
+
+    return final_schedule
 
 
 if __name__ == "__main__":
     person1_Schedule = None
-    person1_DailyAct = None 
+    person1_DailyAct = None
     person2_Schedule = None
-    person2_DailyAct = None 
+    person2_DailyAct = None
     duration_of_meeting = None
-    
-    file = open('input_testcase10.txt')
-    
-    for line in file: 
+
+    file = open("input_testcase10.txt")
+
+    for line in file:
         exec(line)
 
     inverted_person1_schedule = invert_time_slots(person1_Schedule)
