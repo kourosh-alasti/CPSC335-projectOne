@@ -124,42 +124,35 @@ if __name__ == "__main__":
     person2_DailyAct = None
     duration_of_meeting = None
 
-    file = open("input_testcase05.txt")
+    file = open("input.txt")
+
+    output_text = []
 
     for line in file:
-        exec(line)
+        if line != "\n":
+            exec(line)
+        else:
+            # Should Execute next line of cases / prepare?
+            inverted_person1_schedule = invert_time_slots(person1_Schedule)
+            inverted_person2_schedule = invert_time_slots(person2_Schedule)
 
-    inverted_person1_schedule = invert_time_slots(person1_Schedule)
-    inverted_person2_schedule = invert_time_slots(person2_Schedule)
+            # Find available slots for each person
+            person1_slots = find_available_slots(
+                inverted_person1_schedule, person1_DailyAct, duration_of_meeting
+            )
+            person2_slots = find_available_slots(
+                inverted_person2_schedule, person2_DailyAct, duration_of_meeting
+            )
 
-    # Debugging Code
-    # print(f"Schedule 1 Before Merge: {inverted_person1_schedule}")
-    # print(f"Schedule 2 Before Merge: {inverted_person2_schedule}")
+            # Find common available slots for both persons
+            common_slots = find_common_time_slots(
+                person1_slots, person2_slots, duration_of_meeting
+            )
 
-    # Find available slots for each person
-    person1_slots = find_available_slots(
-        inverted_person1_schedule, person1_DailyAct, duration_of_meeting
-    )
-    person2_slots = find_available_slots(
-        inverted_person2_schedule, person2_DailyAct, duration_of_meeting
-    )
+            output_text.append(common_slots)  # Output
 
-    # Debugging Code
-    # new1 = [
-    #     (convert_to_string(start), convert_to_string(end))
-    #     for start, end in person1_slots
-    # ]
-    # new2 = [
-    #     (convert_to_string(start), convert_to_string(end))
-    #     for start, end in person2_slots
-    # ]
+    # Write to the file
+    output_file = open("output.txt", "a")
 
-    # print(f"Person 1 Available Slots:\n\n{new1}\n\n")
-    # print(f"Person 2 Available Slots:\n\n{new2}\n\n")
-
-    # Find common available slots for both persons
-    common_slots = find_common_time_slots(
-        person1_slots, person2_slots, duration_of_meeting
-    )
-
-    print(common_slots)  # Output
+    for index, line in enumerate(output_text):
+        output_file.write(f"Test Case [{index + 1}]: {str(line)}\n")
